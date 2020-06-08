@@ -10,6 +10,7 @@ const iteration = document.getElementById('iteration')
 const tableBody = document.getElementById('table-body')
 const listFinalVar = document.getElementById('final-result')
 const masalah = document.getElementById('masalah')
+const tabelHasil = document.getElementById('tabel-hasil')
 
 let listItem = []
 let result = 0
@@ -162,13 +163,16 @@ const logger = (population = [], generation = 0) => {
 }
 
 const finalLog = (item = {}) => {
-  item.gene.forEach(({ variable, value }) => {
-    const word = `${variable} = ${value}`
-    const li = document.createElement('li')
-    const txt = document.createTextNode(word)
-    li.appendChild(txt)
-    listFinalVar.appendChild(li)
+  let words = ''
+  listFinalVar.innerHTML = ''
+  item.gene.forEach(({ variable, value }, id) => {
+    let word = `${variable} = ${value} | `
+    if (id === 0) {
+      word = `| ${variable} = ${value} | `
+    }
+    words += word
   })
+  listFinalVar.innerHTML = words
 }
 
 const refreshVariable = (available = Object, selected = []) => {
@@ -219,6 +223,9 @@ variableForm.addEventListener('submit', (e) => {
 })
 
 btnCalculate.addEventListener('click', (e) => {
+  btnCalculate.classList.add('d-none')
+  tabelHasil.classList.remove('d-none')
+
   let isLoading = true
   let generation = 1
   while (isLoading) {
