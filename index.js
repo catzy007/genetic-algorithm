@@ -143,23 +143,27 @@ const logging = (list) => {
 }
 
 const logger = (population = [], generation = 0) => {
-  iteration.innerHTML = ''
   tableBody.querySelectorAll('*').forEach((x) => x.remove())
+  iteration.textContent = ''
+
   population.forEach((item, id) => {
     const tr = document.createElement('tr')
     const dt = document.createElement('td')
     const nomor = document.createTextNode(id + 1)
+
     dt.appendChild(nomor)
     tr.appendChild(dt)
+
     item.gene.map((x) => {
-      const text = document.createTextNode(x.value)
       const td = document.createElement('td')
-      td.appendChild(text)
+      td.textContent = x.value
       tr.appendChild(td)
     })
+
     tableBody.appendChild(tr)
   })
-  iteration.innerHTML = generation
+
+  iteration.textContent = generation
 }
 
 const finalLog = (item = {}) => {
@@ -223,8 +227,9 @@ variableForm.addEventListener('submit', (e) => {
 })
 
 btnCalculate.addEventListener('click', (e) => {
-  btnCalculate.classList.add('d-none')
+  //btnCalculate.classList.add('d-none')
   tabelHasil.classList.remove('d-none')
+  tabelHasil.classList.add('my-5')
 
   let isLoading = true
   let generation = 1
@@ -233,7 +238,9 @@ btnCalculate.addEventListener('click', (e) => {
     const [parent1, parent2] = selection(population)
     const [child1, child2] = crossover(parent1, parent2, result)
 
-    logger(population, generation)
+    setTimeout(() => {
+      logger(population, generation)
+    }, 0.01)
 
     const mutan1 = mutation(child1, mutationRate, result)
     const mutan2 = mutation(child2, mutationRate, result)
