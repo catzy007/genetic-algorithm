@@ -240,7 +240,7 @@ btnCalculate.addEventListener('click', (e) => {
 
     setTimeout(() => {
       logger(population, generation)
-    }, 0.01)
+    }, 0.001)
 
     const mutan1 = mutation(child1, mutationRate, result)
     const mutan2 = mutation(child2, mutationRate, result)
